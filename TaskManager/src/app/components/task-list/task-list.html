@@ -1,0 +1,121 @@
+<div class="task-list">
+    <h2>📋 Lista de Tareas</h2>
+
+
+    <div class="search-box">
+        <input type="text" [(ngModel)]="searchTerm" (input)="filterTasks()" placeholder="Buscar tareas">
+    </div>
+
+
+    <div *ngIf="loading" class="status loading">
+        Cargando tareas
+    </div>
+
+
+    <div *ngIf="error" class="status error">
+        {{ error }}
+    </div>
+
+
+    <div *ngIf="!loading && filteredTasks.length" class="status empty">
+        No hay tareas
+    </div>
+
+
+
+    <!-- Tabla de tareas -->
+    <table *ngIf="!loading && filteredTasks.length>0" >
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TITULO</th>
+                <TH>STATUS</TH>
+                <TH>ACCIONES</TH>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of filteredTasks">
+                <td>{{task.id}}</td>
+                <td>{{task.title}}</td>
+                <td
+                [ngClass]="{'completada': task.completed, 'pendiente':!task.completed}"
+                >{{task.completed ? 'Completada' : 'Pendiente'}}</td>
+                <td class="actions">
+                    <a [routerLink]="['/tasks/edit', task.id]">✏️</a>
+                    <button (click)="deleteTask(task)">🗑️</button>
+                </td>
+            </tr>
+
+        </tbody>
+
+
+
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 
+
+
+
+
+  <table *ngIf="!loading && filteredTasks.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of filteredTasks">
+        <td>{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>
+          <span [ngClass]="{'completada': task.completed, 'pendiente': !task.completed}">
+            {{ task.completed ? '✅ Completada' : '⏳ Pendiente' }}
+          </span>
+        </td>
+        <td class="actions">
+          <a [routerLink]="['/tasks/edit', task.id]" class="btn btn-edit">✏️</a>
+          <button (click)="deleteTask(task)" class="btn btn-delete">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ -->
+
+
+</div>

@@ -401,18 +401,21 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(task: Task): void {
-    if (confirm(`¿Eliminar "${task.title}"?`)) {
-      this.taskService.deleteTask(task.id!).subscribe({
-        next: () => {
-          this.tasks = this.tasks.filter(t => t.id !== task.id);
-          this.filteredTasks = this.filteredTasks.filter(t => t.id !== task.id);
-        },
-        error: (err) => {
-          this.error = 'Error al eliminar';
-          console.error(err);
-        }
-      });
-    }
+    if (!task.id) return;
+
+    const confirmed = confirm(`¿Eliminar "${task.title}"`);
+    if (!confirmed) return;
+
+    this.taskservice.deleteTask(task.id).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.id !== task.id);
+        this.filteredTasks = this.filteredTasks.filter(t => t.id !== task.id);
+      },
+      error: (err) => {
+        this.error = 'Error al eliminar la tarea';
+        console.error(err);
+      }
+    });
   }
 }
 ```
@@ -787,19 +790,19 @@ Abre `http://localhost:4200` y prueba:
 
 ## 📝 Resumen de Conceptos
 
-| Concepto | Dónde lo usamos |
-|----------|-----------------|
-| Componentes | navbar, home, task-list, task-form |
-| Servicios + HTTP | TaskService con CRUD |
-| Routing | app-routing-module.ts |
-| Parámetros de ruta | `:id` y `ActivatedRoute` |
-| *ngIf | Estados loading/error/vacío |
-| *ngFor | Iterar tareas |
-| [(ngModel)] | Two-way binding en formularios |
-| (click), (ngSubmit) | Event binding |
-| [disabled], [routerLink] | Property binding |
-| [ngClass] | Clases condicionales |
-| ChangeDetectorRef | Forzar actualización de vista |
+| Concepto                 | Dónde lo usamos                    |
+| ------------------------ | ---------------------------------- |
+| Componentes              | navbar, home, task-list, task-form |
+| Servicios + HTTP         | TaskService con CRUD               |
+| Routing                  | app-routing-module.ts              |
+| Parámetros de ruta       | `:id` y `ActivatedRoute`           |
+| *ngIf                    | Estados loading/error/vacío        |
+| *ngFor                   | Iterar tareas                      |
+| [(ngModel)]              | Two-way binding en formularios     |
+| (click), (ngSubmit)      | Event binding                      |
+| [disabled], [routerLink] | Property binding                   |
+| [ngClass]                | Clases condicionales               |
+| ChangeDetectorRef        | Forzar actualización de vista      |
 
 ---
 
@@ -853,34 +856,34 @@ https://TU-USUARIO.github.io/task-manager/
 
 ## ⚠️ Errores Comunes y Soluciones
 
-| Problema | Solución |
-|----------|----------|
-| "Can't bind to 'ngModel'" | Importar `FormsModule` en el módulo |
-| "NullInjectorError: HttpClient" | Añadir `provideHttpClient()` en providers |
-| Vista no se actualiza | Añadir `ChangeDetectorRef.detectChanges()` |
-| Varios enlaces "active" | Usar `[routerLinkActiveOptions]="{exact: true}"` |
-| `+id` error | Es para convertir string a number |
-| Página en blanco en GitHub Pages | Verificar `--base-href` correcto |
-| 404 al refrescar en GitHub Pages | Es normal en SPAs, usar hash routing |
+| Problema                         | Solución                                         |
+| -------------------------------- | ------------------------------------------------ |
+| "Can't bind to 'ngModel'"        | Importar `FormsModule` en el módulo              |
+| "NullInjectorError: HttpClient"  | Añadir `provideHttpClient()` en providers        |
+| Vista no se actualiza            | Añadir `ChangeDetectorRef.detectChanges()`       |
+| Varios enlaces "active"          | Usar `[routerLinkActiveOptions]="{exact: true}"` |
+| `+id` error                      | Es para convertir string a number                |
+| Página en blanco en GitHub Pages | Verificar `--base-href` correcto                 |
+| 404 al refrescar en GitHub Pages | Es normal en SPAs, usar hash routing             |
 
 ---
 
 ## 📝 Resumen de Conceptos
 
-| Concepto | Dónde lo usamos |
-|----------|-----------------|
-| Componentes | navbar, home, task-list, task-form |
-| Servicios + HTTP | TaskService con CRUD |
-| Routing | app-routing-module.ts |
-| Parámetros de ruta | `:id` y `ActivatedRoute` |
-| *ngIf | Estados loading/error/vacío |
-| *ngFor | Iterar tareas |
-| [(ngModel)] | Two-way binding en formularios |
-| (click), (ngSubmit) | Event binding |
-| [disabled], [routerLink] | Property binding |
-| [ngClass] | Clases condicionales |
-| ChangeDetectorRef | Forzar actualización de vista |
-| GitHub Pages | Despliegue de producción |
+| Concepto                 | Dónde lo usamos                    |
+| ------------------------ | ---------------------------------- |
+| Componentes              | navbar, home, task-list, task-form |
+| Servicios + HTTP         | TaskService con CRUD               |
+| Routing                  | app-routing-module.ts              |
+| Parámetros de ruta       | `:id` y `ActivatedRoute`           |
+| *ngIf                    | Estados loading/error/vacío        |
+| *ngFor                   | Iterar tareas                      |
+| [(ngModel)]              | Two-way binding en formularios     |
+| (click), (ngSubmit)      | Event binding                      |
+| [disabled], [routerLink] | Property binding                   |
+| [ngClass]                | Clases condicionales               |
+| ChangeDetectorRef        | Forzar actualización de vista      |
+| GitHub Pages             | Despliegue de producción           |
 
 ---
 
