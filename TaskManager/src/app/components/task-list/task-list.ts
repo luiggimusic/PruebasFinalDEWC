@@ -26,6 +26,19 @@ export class TaskList implements OnInit {
     this.loadTasks();
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   loadTasks(): void {
     this.loading = true;
     this.taskservice.getTasks().subscribe({
@@ -50,10 +63,6 @@ export class TaskList implements OnInit {
       task.title.toLowerCase().includes(term)
     );
   }
-
-
-
-
 
 
   deleteTask(task: Task): void {
